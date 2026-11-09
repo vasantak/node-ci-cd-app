@@ -27,7 +27,7 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
 
           script: |
-            cd /home/ubuntu/node-ec2-app
+            cd /home/ubuntu/node-ci-cd-app
 
             echo "Pulling latest code..."
 
