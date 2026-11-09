@@ -1,0 +1,46 @@
+
+name: Deploy Node.js App to AWS EC2
+
+# Run this workflow whenever code is pushed to main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Get source code from GitHub
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Connect to EC2 and deploy
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT }}
+
+          script: |
+            cd /home/ubuntu/node-ec2-app
+
+            echo "Pulling latest code..."
+
+            git pull --ff-only origin main
+
+            echo "Installing dependencies..."
+
+            npm ci
+
+            echo "Restarting Node application..."
+
+            pm2 reload node-ec2-app --update-env
+
+            pm2 save
+
+            echo "Deployment completed!"

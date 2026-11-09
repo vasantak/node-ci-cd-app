@@ -17,9 +17,10 @@ app.get("/", (req, res) => {
 // Health Check API
 app.get("/health", (req, res) => {
   res.status(200).json({
-    status: "UP",
-    message: "Application is healthy",
     timestamp: new Date().toISOString(),
+    status: 'success',
+    message: 'Updated automatically using CI/CD!',
+    server: 'AWS EC2'
   });
 });
 
