@@ -19,7 +19,7 @@ app.get("/health", (req, res) => {
   res.status(200).json({
     timestamp: new Date().toISOString(),
     status: 'success',
-    message: 'Updated automatically using CI/CD!',
+    message: 'Updated automatically using CI/CD! ',
     server: 'AWS EC2'
   });
 });
